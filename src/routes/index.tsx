@@ -25,6 +25,8 @@ import mezaninoAsset from "../assets/mezanino.asset.json";
 import coberturaImg from "../assets/cobertura.jpg";
 import galpaoImg from "../assets/galpao.jpg";
 import gradesImg from "../assets/grades.jpg";
+import estruturasImg from "../assets/estruturas.jpg";
+import gradesProtecaoImg from "../assets/grades-protecao.jpg";
 
 // TODO: substitua pelo número oficial do WhatsApp da PEH Serralheria
 const WHATSAPP_URL =
@@ -73,6 +75,7 @@ const services = [
     icon: DraftingCompass,
     title: "Estruturas Metálicas",
     text: "Fabricação e instalação de estruturas sob medida para projetos residenciais, comerciais e industriais — com foco em resistência, segurança e durabilidade.",
+    image: estruturasImg,
   },
   {
     icon: Building2,
@@ -96,6 +99,7 @@ const services = [
     icon: ShieldCheck,
     title: "Grades e Proteções Metálicas",
     text: "Produção e instalação de grades para portas, janelas, fachadas, muros e ambientes que precisam de mais segurança e proteção.",
+    image: gradesProtecaoImg,
   },
   {
     icon: Ruler,
@@ -311,14 +315,25 @@ function LandingPage() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-start justify-between gap-6 rounded-2xl bg-navy p-6 transition-colors hover:bg-navy-deep"
+            className="group relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl p-6"
           >
-            <p className="font-display text-xl font-bold leading-snug text-primary-foreground">
-              Não achou o que procura? Fazemos sob medida.
-            </p>
-            <span className="inline-flex items-center gap-2 rounded-lg bg-spark px-4 py-2.5 text-sm font-bold text-navy-deep">
-              Falar com a PEH <ArrowRight className="h-4 w-4" />
-            </span>
+            <img
+              src={weldingAsset.url}
+              alt="Soldador da PEH Serralheria trabalhando em estrutura metálica"
+              loading="lazy"
+              width={1024}
+              height={640}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-navy-deep/85" />
+            <div className="relative flex flex-col items-start justify-between gap-6">
+              <p className="font-display text-xl font-bold leading-snug text-primary-foreground">
+                Não achou o que procura? Fazemos sob medida.
+              </p>
+              <span className="inline-flex items-center gap-2 rounded-lg bg-spark px-4 py-2.5 text-sm font-bold text-navy-deep">
+                Falar com a PEH <ArrowRight className="h-4 w-4" />
+              </span>
+            </div>
           </a>
         </div>
       </section>
