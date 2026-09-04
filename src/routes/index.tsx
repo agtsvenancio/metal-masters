@@ -200,7 +200,7 @@ function LandingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <a href="#" className="flex items-center gap-3">
-            <img src={logoAsset.url} alt="Logo PEH Serralheria" className="h-10 w-auto" />
+            <img src={logoAsset.url} alt="Logo PEH Serralheria" className="h-14 w-auto" />
             <span className="hidden font-display text-sm font-extrabold uppercase tracking-widest text-navy sm:block">
               PEH Serralheria
             </span>
