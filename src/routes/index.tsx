@@ -37,13 +37,13 @@ export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "PEH Serralheria — Tudo em Ferro e Aço Inox" },
+      { title: "PEH Serralheria Tudo em Ferro e Aço Inox" },
       {
         name: "description",
         content:
           "Estruturas, coberturas, mezaninos, galpões, esquadrias, grades, corrimãos e guarda-corpos em ferro e aço inox sob medida. Orçamento rápido e sem compromisso.",
       },
-      { property: "og:title", content: "PEH Serralheria — Tudo em Ferro e Aço Inox" },
+      { property: "og:title", content: "PEH Serralheria Tudo em Ferro e Aço Inox" },
       {
         property: "og:description",
         content:
@@ -74,7 +74,7 @@ const services = [
   {
     icon: DraftingCompass,
     title: "Estruturas Metálicas",
-    text: "Fabricação e instalação de estruturas sob medida para projetos residenciais, comerciais e industriais — com foco em resistência, segurança e durabilidade.",
+    text: "Fabricação e instalação de estruturas sob medida para projetos residenciais, comerciais e industriais, com foco em resistência, segurança e durabilidade.",
     image: estruturasImg,
   },
   {
@@ -104,7 +104,7 @@ const services = [
   {
     icon: Ruler,
     title: "Corrimãos e Guarda-Corpos",
-    text: "Corrimãos e guarda-corpos personalizados para escadas, sacadas, mezaninos, passarelas e áreas elevadas — em ferro ou inox.",
+    text: "Corrimãos e guarda-corpos personalizados para escadas, sacadas, mezaninos, passarelas e áreas elevadas, em ferro ou inox.",
     image: corrimaoImg,
   },
   {
@@ -172,7 +172,7 @@ const faqs = [
   },
   {
     q: "Trabalham com aço inox além de ferro?",
-    a: "Sim. Somos especialistas tanto em ferro quanto em aço inox — ideal para corrimãos, guarda-corpos e ambientes que exigem acabamento superior.",
+    a: "Sim. Somos especialistas tanto em ferro quanto em aço inox, ideal para corrimãos, guarda-corpos e ambientes que exigem acabamento superior.",
   },
   {
     q: "Quanto tempo leva para fabricar e instalar?",
@@ -240,7 +240,7 @@ function LandingPage() {
           </h1>
           <p className="mt-6 max-w-xl text-lg text-steel">
             Estruturas, coberturas, mezaninos, galpões, esquadrias, grades e corrimãos
-            fabricados e instalados por quem entende do ofício. Deus é fiel — e nosso
+            fabricados e instalados por quem entende do ofício. Deus é fiel, e nosso
             compromisso é com a qualidade.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -341,7 +341,7 @@ function LandingPage() {
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-widest text-steel/70">Trabalhos realizados</p>
             <h2 className="mt-2 font-display text-3xl font-black text-primary-foreground sm:text-4xl">
-              Obra boa não precisa de discurso — precisa de foto
+              Obra boa não precisa de discurso, precisa de foto
             </h2>
             <p className="mt-4 text-steel">
               Alguns dos projetos que fabricamos e instalamos. Cada um medido, soldado e
@@ -365,7 +365,7 @@ function LandingPage() {
         </div>
       </section>
 
-      {/* Por que a PEH — quebra de objeções */}
+      {/* Por que a PEH quebra de objeções */}
       <section className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="overflow-hidden rounded-2xl">
@@ -486,9 +486,9 @@ function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-white/10 bg-navy-deep py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 text-center">
-          <img src={logoImg} alt="PEH Serralheria — Deus é fiel, tudo em ferro e aço inox" className="h-16 w-auto" />
+          <img src={logoImg} alt="PEH Serralheria. Deus é fiel, tudo em ferro e aço inox" className="h-16 w-auto" />
           <p className="text-sm text-steel">
-            PEH Serralheria — Tudo em ferro e aço inox. Estruturas, coberturas, mezaninos,
+            PEH Serralheria. Tudo em ferro e aço inox. Estruturas, coberturas, mezaninos,
             galpões, esquadrias, grades, corrimãos e guarda-corpos sob medida.
           </p>
           <p className="text-xs text-steel/60">© {new Date().getFullYear()} PEH Serralheria. Todos os direitos reservados.</p>
