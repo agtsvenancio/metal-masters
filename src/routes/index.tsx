@@ -15,13 +15,13 @@ import {
   Wrench,
 } from "lucide-react";
 
-import logoAsset from "../assets/logo.asset.json";
-import weldingAsset from "../assets/welding.asset.json";
-import sparksAsset from "../assets/sparks.asset.json";
-import escadaAsset from "../assets/escada.asset.json";
-import escada2Asset from "../assets/escada2.asset.json";
-import corrimaoAsset from "../assets/corrimao.asset.json";
-import mezaninoAsset from "../assets/mezanino.asset.json";
+import logoImg from "../assets/logo.png";
+import weldingImg from "../assets/welding.jpg";
+import sparksImg from "../assets/sparks.jpg";
+import escadaImg from "../assets/escada.png";
+import escada2Img from "../assets/escada2.jpg";
+import corrimaoImg from "../assets/corrimao.png";
+import mezaninoImg from "../assets/mezanino.png";
 import coberturaImg from "../assets/cobertura.jpg";
 import galpaoImg from "../assets/galpao.jpg";
 import gradesImg from "../assets/grades.jpg";
@@ -87,7 +87,7 @@ const services = [
     icon: Layers,
     title: "Mezaninos Metálicos",
     text: "Desenvolvimento e montagem de mezaninos para ampliar a área útil e aproveitar melhor os espaços em empresas, galpões, comércios e residências.",
-    image: mezaninoAsset.url,
+    image: mezaninoImg,
   },
   {
     icon: Wrench,
@@ -105,7 +105,7 @@ const services = [
     icon: Ruler,
     title: "Corrimãos e Guarda-Corpos",
     text: "Corrimãos e guarda-corpos personalizados para escadas, sacadas, mezaninos, passarelas e áreas elevadas — em ferro ou inox.",
-    image: corrimaoAsset.url,
+    image: corrimaoImg,
   },
   {
     icon: Building2,
@@ -185,10 +185,10 @@ const faqs = [
 ];
 
 const gallery = [
-  { src: escadaAsset.url, alt: "Escada metálica preta com degraus de madeira instalada pela PEH Serralheria" },
-  { src: escada2Asset.url, alt: "Escada de ferro com corrimão fabricada sob medida" },
-  { src: mezaninoAsset.url, alt: "Mezanino metálico com guarda-corpo instalado em galpão" },
-  { src: corrimaoAsset.url, alt: "Corrimão de aço inox instalado em escada externa" },
+  { src: escadaImg, alt: "Escada metálica preta com degraus de madeira instalada pela PEH Serralheria" },
+  { src: escada2Img, alt: "Escada de ferro com corrimão fabricada sob medida" },
+  { src: mezaninoImg, alt: "Mezanino metálico com guarda-corpo instalado em galpão" },
+  { src: corrimaoImg, alt: "Corrimão de aço inox instalado em escada externa" },
   { src: coberturaImg, alt: "Cobertura metálica instalada em garagem residencial" },
   { src: gradesImg, alt: "Janela com esquadria e grade metálica preta sob medida" },
 ];
@@ -200,10 +200,7 @@ function LandingPage() {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <a href="#" className="flex items-center gap-3">
-            <img src={logoAsset.url} alt="Logo PEH Serralheria" className="h-14 w-auto" />
-            <span className="hidden font-display text-sm font-extrabold uppercase tracking-widest text-navy sm:block">
-              PEH Serralheria
-            </span>
+            <img src={logoImg} alt="Logo PEH Serralheria" className="h-14 w-auto" />
           </a>
           <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
             <a href="#servicos" className="transition-colors hover:text-navy">Serviços</a>
@@ -226,7 +223,7 @@ function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <img
-          src={weldingAsset.url}
+          src={weldingImg}
           alt="Soldador da PEH Serralheria trabalhando em estrutura metálica"
           className="absolute inset-0 h-full w-full object-cover"
           width={1920}
@@ -318,7 +315,7 @@ function LandingPage() {
             className="group relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl p-6"
           >
             <img
-              src={weldingAsset.url}
+              src={weldingImg}
               alt="Soldador da PEH Serralheria trabalhando em estrutura metálica"
               loading="lazy"
               width={1024}
@@ -373,7 +370,7 @@ function LandingPage() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="overflow-hidden rounded-2xl">
             <img
-              src={sparksAsset.url}
+              src={sparksImg}
               alt="Profissional da PEH Serralheria polindo metal com equipamento de proteção"
               loading="lazy"
               width={1920}
@@ -457,7 +454,7 @@ function LandingPage() {
       {/* CTA final */}
       <section className="relative overflow-hidden">
         <img
-          src={sparksAsset.url}
+          src={sparksImg}
           alt=""
           aria-hidden
           loading="lazy"
@@ -489,7 +486,7 @@ function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-white/10 bg-navy-deep py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 text-center">
-          <img src={logoAsset.url} alt="PEH Serralheria — Deus é fiel, tudo em ferro e aço inox" className="h-16 w-auto" />
+          <img src={logoImg} alt="PEH Serralheria — Deus é fiel, tudo em ferro e aço inox" className="h-16 w-auto" />
           <p className="text-sm text-steel">
             PEH Serralheria — Tudo em ferro e aço inox. Estruturas, coberturas, mezaninos,
             galpões, esquadrias, grades, corrimãos e guarda-corpos sob medida.
