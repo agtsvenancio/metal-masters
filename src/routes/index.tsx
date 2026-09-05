@@ -261,10 +261,10 @@ function LandingPage() {
               <ArrowRight className="h-4 w-4" />
             </a>
           </div>
-          <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-steel">
+          <ul className="mt-10 flex flex-col items-start gap-2 text-sm text-steel sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
             {["Orçamento sem compromisso", "Fabricação própria", "Instalação inclusa"].map((item) => (
               <li key={item} className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-spark" />
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-spark" />
                 {item}
               </li>
             ))}
