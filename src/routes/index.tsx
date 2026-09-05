@@ -328,7 +328,7 @@ function LandingPage() {
                 Não achou o que procura? Fazemos sob medida.
               </p>
               <span className="inline-flex items-center gap-2 rounded-lg bg-spark px-4 py-2.5 text-sm font-bold text-navy-deep">
-                Falar com a PEH <ArrowRight className="h-4 w-4" />
+                Fale Conosco! <ArrowRight className="h-4 w-4" />
               </span>
             </div>
           </a>
@@ -491,7 +491,9 @@ function LandingPage() {
             PEH Serralheria. Tudo em ferro e aço inox. Estruturas, coberturas, mezaninos,
             galpões, esquadrias, grades, corrimãos e guarda-corpos sob medida.
           </p>
-          <p className="text-xs text-steel/60">© {new Date().getFullYear()} PEH Serralheria. Todos os direitos reservados.</p>
+          <p className="text-xs text-steel/60">
+            © {new Date().getFullYear()} PEH Serralheria. Todos os direitos reservados. Desenvolvido por Agência SCASE.
+          </p>
         </div>
       </footer>
 
