@@ -1,18 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { FormEvent, useEffect, useState } from "react";
 import {
   ArrowRight,
-  Award,
   Building2,
-  CheckCircle2,
-  ClipboardList,
-  DraftingCompass,
-  Flame,
-  Layers,
+  Check,
+  ChevronRight,
+  FileCheck2,
+  Grid3X3,
+  HardHat,
+  Layers3,
+  Menu,
   MessageCircle,
+  Phone,
   Ruler,
   ShieldCheck,
-  Timer,
+  Sparkles,
+  Stairs,
+  Warehouse,
   Wrench,
+  X,
 } from "lucide-react";
 
 import logoImg from "../assets/logo.png";
@@ -23,31 +29,33 @@ import escada2Img from "../assets/escada2.jpg";
 import corrimaoImg from "../assets/corrimao.png";
 import mezaninoImg from "../assets/mezanino.png";
 import coberturaImg from "../assets/cobertura.jpg";
-import galpaoImg from "../assets/galpao.jpg";
 import gradesImg from "../assets/grades.jpg";
 import estruturasImg from "../assets/estruturas.jpg";
 import gradesProtecaoImg from "../assets/grades-protecao.jpg";
 
-// TODO: substitua pelo número oficial do WhatsApp da PEH Serralheria
-const WHATSAPP_URL =
-  "https://wa.me/5511999999999?text=" +
-  encodeURIComponent("Olá! Quero solicitar um orçamento com a PEH Serralheria.");
+const PHONE_DISPLAY = "(11) 2553-2623";
+const PHONE_URL = "tel:+551125532623";
+const WHATSAPP_DISPLAY = "(11) 96741-1274";
+const WHATSAPP_BASE = "https://wa.me/5511967411274";
+const WHATSAPP_URL = `${WHATSAPP_BASE}?text=${encodeURIComponent(
+  "Olá! Quero solicitar um orçamento com a PEH Serralheria.",
+)}`;
 
 export const Route = createFileRoute("/")({
   component: LandingPage,
   head: () => ({
     meta: [
-      { title: "PEH Serralheria Tudo em Ferro e Aço Inox" },
+      { title: "PEH Serralheria | Estruturas e Soluções Metálicas" },
       {
         name: "description",
         content:
-          "Estruturas, coberturas, mezaninos, galpões, esquadrias, grades, corrimãos e guarda-corpos em ferro e aço inox sob medida. Orçamento rápido e sem compromisso.",
+          "PEH Serralheria: soluções em estruturas metálicas, mezaninos, escadas, coberturas, guarda-corpos, grelhas, ferro e aço inox.",
       },
-      { property: "og:title", content: "PEH Serralheria Tudo em Ferro e Aço Inox" },
+      { property: "og:title", content: "PEH Serralheria | Estruturas e Soluções Metálicas" },
       {
         property: "og:description",
         content:
-          "Fabricação e instalação de estruturas metálicas sob medida para residências, comércios e indústrias. Solicite seu orçamento.",
+          "Soluções metálicas desenvolvidas com experiência, segurança, qualidade e precisão.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
@@ -61,452 +69,415 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "PEH Serralheria",
-          slogan: "Tudo em ferro e aço inox",
           description:
-            "Fabricação e instalação de estruturas metálicas, coberturas, mezaninos, galpões, esquadrias, grades, corrimãos e guarda-corpos sob medida.",
+            "Soluções em estruturas metálicas desenvolvidas com experiência, segurança, qualidade e precisão.",
+          telephone: "+55 11 2553-2623",
         }),
       },
     ],
   }),
 });
 
+const navItems = [
+  { label: "Home", href: "#home" },
+  { label: "Sobre nós", href: "#sobre" },
+  { label: "Serviços", href: "#servicos" },
+  { label: "Segurança", href: "#seguranca" },
+  { label: "Contato", href: "#contato" },
+];
+
 const services = [
   {
-    icon: DraftingCompass,
-    title: "Estruturas Metálicas",
-    text: "Fabricação e instalação de estruturas sob medida para projetos residenciais, comerciais e industriais, com foco em resistência, segurança e durabilidade.",
+    icon: Building2,
+    title: "Estruturas metálicas",
+    text: "Desenvolvimento e execução de estruturas para diferentes projetos, com planejamento técnico e precisão.",
     image: estruturasImg,
   },
   {
-    icon: Building2,
-    title: "Coberturas Metálicas",
-    text: "Projeto e instalação de coberturas para garagens, corredores, áreas externas, comércios, empresas e todos os tipos de edificações.",
-    image: coberturaImg,
-  },
-  {
-    icon: Layers,
-    title: "Mezaninos Metálicos",
-    text: "Desenvolvimento e montagem de mezaninos para ampliar a área útil e aproveitar melhor os espaços em empresas, galpões, comércios e residências.",
+    icon: Layers3,
+    title: "Mezaninos",
+    text: "Soluções sob medida para ampliar e aproveitar espaços com segurança e qualidade de execução.",
     image: mezaninoImg,
   },
   {
-    icon: Wrench,
-    title: "Janelas e Esquadrias",
-    text: "Janelas e esquadrias metálicas sob medida, desenvolvidas de acordo com as características e necessidades de cada projeto.",
-    image: gradesImg,
-  },
-  {
-    icon: ShieldCheck,
-    title: "Grades e Proteções Metálicas",
-    text: "Produção e instalação de grades para portas, janelas, fachadas, muros e ambientes que precisam de mais segurança e proteção.",
-    image: gradesProtecaoImg,
+    icon: Stairs,
+    title: "Escadas metálicas",
+    text: "Escadas projetadas para cada necessidade, combinando resistência, segurança e acabamento profissional.",
+    image: escadaImg,
   },
   {
     icon: Ruler,
-    title: "Corrimãos e Guarda-Corpos",
-    text: "Corrimãos e guarda-corpos personalizados para escadas, sacadas, mezaninos, passarelas e áreas elevadas, em ferro ou inox.",
+    title: "Escadas marinheiro",
+    text: "Acessos metálicos verticais desenvolvidos com atenção às medidas, ao uso e à segurança da instalação.",
+    image: escada2Img,
+  },
+  {
+    icon: Warehouse,
+    title: "Coberturas metálicas",
+    text: "Coberturas executadas conforme as características do projeto, priorizando proteção e durabilidade.",
+    image: coberturaImg,
+  },
+  {
+    icon: ShieldCheck,
+    title: "Guarda-corpos",
+    text: "Proteções em ferro ou aço inox desenvolvidas para áreas elevadas, escadas e passarelas.",
     image: corrimaoImg,
   },
   {
-    icon: Building2,
-    title: "Galpões Metálicos",
-    text: "Construção e montagem de galpões para indústrias, depósitos, oficinas e comércios, com estruturas desenvolvidas conforme cada operação.",
-    image: galpaoImg,
+    icon: Grid3X3,
+    title: "Grelhas",
+    text: "Peças metálicas resistentes, fabricadas sob medida para atender às necessidades de cada instalação.",
+    image: gradesProtecaoImg,
+  },
+  {
+    icon: Wrench,
+    title: "Outras soluções em ferro e aço inox",
+    text: "Projetos personalizados avaliados de acordo com as medidas, o uso e as necessidades de execução.",
+    image: gradesImg,
   },
 ];
 
-const reasons = [
-  {
-    icon: Ruler,
-    title: "Tudo sob medida",
-    text: "Nada de peça genérica: cada projeto é medido, calculado e fabricado para o seu espaço.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Segurança em primeiro lugar",
-    text: "Estruturas calculadas e soldadas por profissionais experientes, com acabamento que dura.",
-  },
-  {
-    icon: Timer,
-    title: "Prazo respeitado",
-    text: "Cronograma claro desde o orçamento. Você sabe quando começa e quando termina.",
-  },
-  {
-    icon: Award,
-    title: "Ferro e aço inox de qualidade",
-    text: "Trabalhamos com materiais certificados para garantir resistência e durabilidade.",
-  },
-];
-
-const steps = [
-  {
-    icon: MessageCircle,
-    title: "1. Você chama no WhatsApp",
-    text: "Conte o que precisa. Respondemos rápido e já orientamos sobre a melhor solução.",
-  },
-  {
-    icon: Ruler,
-    title: "2. Medição e orçamento",
-    text: "Vamos até o local, tiramos as medidas e apresentamos um orçamento claro, sem surpresas.",
-  },
-  {
-    icon: Flame,
-    title: "3. Fabricação própria",
-    text: "Sua peça é fabricada na nossa serralheria, com solda e acabamento de qualidade.",
-  },
-  {
-    icon: ClipboardList,
-    title: "4. Instalação e entrega",
-    text: "Instalamos com segurança, limpamos o local e entregamos pronto para usar.",
-  },
-];
-
-const faqs = [
-  {
-    q: "O orçamento é gratuito?",
-    a: "Sim. Você entra em contato, agendamos a medição e apresentamos o orçamento sem compromisso e sem custo.",
-  },
-  {
-    q: "Vocês atendem residências, comércios e indústrias?",
-    a: "Sim. Atendemos desde pequenos reparos e instalações residenciais até galpões e estruturas industriais completas.",
-  },
-  {
-    q: "Trabalham com aço inox além de ferro?",
-    a: "Sim. Somos especialistas tanto em ferro quanto em aço inox, ideal para corrimãos, guarda-corpos e ambientes que exigem acabamento superior.",
-  },
-  {
-    q: "Quanto tempo leva para fabricar e instalar?",
-    a: "Depende do tamanho do projeto. Serviços menores são concluídos em poucos dias; estruturas maiores seguem um cronograma definido já no orçamento.",
-  },
-  {
-    q: "As estruturas têm garantia?",
-    a: "Sim. Trabalhamos com materiais de qualidade e mão de obra especializada, garantindo a segurança e a durabilidade de cada instalação.",
-  },
-];
-
-const gallery = [
-  { src: escadaImg, alt: "Escada metálica preta com degraus de madeira instalada pela PEH Serralheria" },
-  { src: escada2Img, alt: "Escada de ferro com corrimão fabricada sob medida" },
-  { src: mezaninoImg, alt: "Mezanino metálico com guarda-corpo instalado em galpão" },
-  { src: corrimaoImg, alt: "Corrimão de aço inox instalado em escada externa" },
-  { src: coberturaImg, alt: "Cobertura metálica instalada em garagem residencial" },
-  { src: gradesImg, alt: "Janela com esquadria e grade metálica preta sob medida" },
+const safetyItems = [
+  { icon: HardHat, title: "EPIs", text: "Uso adequado dos equipamentos necessários para cada atividade." },
+  { icon: ShieldCheck, title: "Procedimentos", text: "Cuidados voltados à segurança da equipe e da obra." },
+  { icon: FileCheck2, title: "Documentação", text: "Documentação relacionada à segurança do trabalho." },
+  { icon: Sparkles, title: "Responsabilidade", text: "Execução conduzida com atenção, cuidado e profissionalismo." },
 ];
 
 function LandingPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 32);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 },
+    );
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  function submitQuote(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const message = [
+      "Olá! Quero solicitar um orçamento com a PEH Serralheria.",
+      `Nome: ${data.get("name") ?? ""}`,
+      `Telefone / WhatsApp: ${data.get("phone") ?? ""}`,
+      `E-mail: ${data.get("email") ?? ""}`,
+      `Serviço de interesse: ${data.get("service") ?? ""}`,
+      `Projeto: ${data.get("message") ?? ""}`,
+    ].join("\n");
+    window.open(`${WHATSAPP_BASE}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  }
+
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <a href="#" className="flex items-center gap-3">
-            <img src={logoImg} alt="Logo PEH Serralheria" className="h-14 w-auto" />
+    <div className="min-h-screen overflow-x-hidden bg-background font-sans text-foreground">
+      <header
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
+          scrolled || menuOpen
+            ? "border-metal/20 bg-background/95 shadow-industrial backdrop-blur-xl"
+            : "border-transparent bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
+          <a href="#home" aria-label="PEH Serralheria, início" className="relative z-10">
+            <img src={logoImg} alt="PEH Serralheria" className="h-14 w-auto object-contain" />
           </a>
-          <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
-            <a href="#servicos" className="transition-colors hover:text-navy">Serviços</a>
-            <a href="#trabalhos" className="transition-colors hover:text-navy">Trabalhos</a>
-            <a href="#como-funciona" className="transition-colors hover:text-navy">Como funciona</a>
-            <a href="#duvidas" className="transition-colors hover:text-navy">Dúvidas</a>
+
+          <nav aria-label="Navegação principal" className="hidden items-center gap-8 lg:flex">
+            {navItems.map((item) => (
+              <a key={item.href} href={item.href} className="nav-link">
+                {item.label}
+              </a>
+            ))}
           </nav>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-navy px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-navy-deep"
-          >
-            <MessageCircle className="h-4 w-4" />
-            Pedir orçamento
+
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary hidden lg:inline-flex">
+            Solicitar orçamento
+            <ArrowRight className="h-4 w-4" />
           </a>
+
+          <button
+            type="button"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+            className="icon-button lg:hidden"
+          >
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
+
+        {menuOpen && (
+          <nav aria-label="Navegação mobile" className="border-t border-metal/15 bg-background px-5 py-6 lg:hidden">
+            <div className="mx-auto flex max-w-7xl flex-col">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex min-h-12 items-center justify-between border-b border-metal/10 text-base font-semibold text-foreground"
+                >
+                  {item.label}
+                  <ChevronRight className="h-4 w-4 text-highlight" />
+                </a>
+              ))}
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary mt-6 justify-center">
+                Solicitar orçamento
+              </a>
+            </div>
+          </nav>
+        )}
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <img
-          src={weldingImg}
-          alt="Soldador da PEH Serralheria trabalhando em estrutura metálica"
-          className="absolute inset-0 h-full w-full object-cover"
-          width={1920}
-          height={1280}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/85 to-navy/40" />
-        <div className="relative mx-auto max-w-6xl px-4 py-24 sm:py-32 lg:py-40">
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-steel">
-            <Flame className="h-3.5 w-3.5 text-spark" />
-            Tudo em ferro e aço inox
-          </p>
-          <h1 className="max-w-3xl font-display text-4xl font-black leading-tight text-primary-foreground sm:text-5xl lg:text-6xl">
-            Serralheria sob medida, do orçamento à instalação
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-steel">
-            Estruturas, coberturas, mezaninos, galpões, esquadrias, grades e corrimãos
-            fabricados e instalados por quem entende do ofício. Deus é fiel, e nosso
-            compromisso é com a qualidade.
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-spark px-6 py-3.5 font-display text-base font-bold text-navy-deep transition-transform hover:scale-[1.02]"
-            >
-              <MessageCircle className="h-5 w-5" />
-              Solicitar orçamento gratuito
-            </a>
-            <a
-              href="#servicos"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/30 px-6 py-3.5 text-base font-semibold text-primary-foreground transition-colors hover:bg-white/10"
-            >
-              Ver todos os serviços
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
-          <ul className="mt-10 flex flex-col items-start gap-2 text-sm text-steel sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
-            {["Orçamento sem compromisso", "Fabricação própria", "Instalação inclusa"].map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 shrink-0 text-spark" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <main>
+        <section id="home" className="relative min-h-[760px] overflow-hidden lg:min-h-[820px]">
+          <img
+            src={weldingImg}
+            alt="Profissional executando trabalho de serralheria em estrutura metálica"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            width={1920}
+            height={1280}
+          />
+          <div className="hero-overlay absolute inset-0" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-metal-gradient" />
 
-      {/* Serviços */}
-      <section id="servicos" className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
-        <div className="max-w-2xl">
-          <p className="text-sm font-bold uppercase tracking-widest text-navy/60">Nossos serviços</p>
-          <h2 className="mt-2 font-display text-3xl font-black text-navy sm:text-4xl">
-            Tudo que sua obra precisa em metal, em um só lugar
-          </h2>
-        </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <article
-              key={s.title}
-              className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md"
-            >
-              {s.image && (
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img
-                    src={s.image}
-                    alt={s.title}
-                    loading="lazy"
-                    width={1024}
-                    height={640}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-              )}
-              <div className="p-6">
-                <div className="mb-3 inline-flex rounded-lg bg-secondary p-2.5">
-                  <s.icon className="h-5 w-5 text-navy" />
-                </div>
-                <h3 className="font-display text-lg font-bold text-navy">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-              </div>
-            </article>
-          ))}
-          {/* CTA card */}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl p-6"
-          >
-            <img
-              src={weldingImg}
-              alt="Soldador da PEH Serralheria trabalhando em estrutura metálica"
-              loading="lazy"
-              width={1024}
-              height={640}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-navy-deep/85" />
-            <div className="relative flex flex-col items-start justify-between gap-6">
-              <p className="font-display text-xl font-bold leading-snug text-primary-foreground">
-                Não achou o que procura? Fazemos sob medida.
+          <div className="relative mx-auto flex min-h-[760px] max-w-7xl items-end px-5 pb-16 pt-32 lg:min-h-[820px] lg:items-center lg:px-8 lg:pb-20 lg:pt-36">
+            <div className="max-w-4xl" data-reveal>
+              <p className="eyebrow"><span />15 anos construindo confiança</p>
+              <h1 className="mt-5 max-w-4xl font-display text-[clamp(3rem,7vw,6.75rem)] font-black uppercase leading-[0.92] text-foreground">
+                Soluções metálicas com <span className="text-highlight">experiência, segurança e precisão.</span>
+              </h1>
+              <p className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
+                Há 15 anos, a PEH Serralheria desenvolve e executa soluções em estruturas metálicas para diferentes necessidades, reunindo experiência de obra, conhecimento técnico e compromisso com cada projeto.
               </p>
-              <span className="inline-flex items-center gap-2 rounded-lg bg-spark px-4 py-2.5 text-sm font-bold text-navy-deep">
-                Fale Conosco! <ArrowRight className="h-4 w-4" />
-              </span>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      {/* Galeria */}
-      <section id="trabalhos" className="bg-navy py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="max-w-2xl">
-            <p className="text-sm font-bold uppercase tracking-widest text-steel/70">Trabalhos realizados</p>
-            <h2 className="mt-2 font-display text-3xl font-black text-primary-foreground sm:text-4xl">
-              Obra boa não precisa de discurso, precisa de foto
-            </h2>
-            <p className="mt-4 text-steel">
-              Alguns dos projetos que fabricamos e instalamos. Cada um medido, soldado e
-              entregue pela nossa equipe.
-            </p>
-          </div>
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-            {gallery.map((g) => (
-              <div key={g.src} className="aspect-square overflow-hidden rounded-xl">
-                <img
-                  src={g.src}
-                  alt={g.alt}
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                />
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary justify-center">
+                  Solicitar orçamento
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+                <a href="#servicos" className="btn-secondary justify-center">Conheça nossos serviços</a>
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-quiet justify-center">
+                  <MessageCircle className="h-5 w-5" /> WhatsApp
+                </a>
               </div>
-            ))}
+              <ul className="mt-10 grid max-w-2xl grid-cols-1 gap-3 border-t border-metal/20 pt-6 text-sm text-muted-foreground sm:grid-cols-3">
+                {["Experiência de obra", "Execução responsável", "Soluções sob medida"].map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <Check className="h-4 w-4 shrink-0 text-highlight" /> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Por que a PEH quebra de objeções */}
-      <section className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="overflow-hidden rounded-2xl">
-            <img
-              src={sparksImg}
-              alt="Profissional da PEH Serralheria polindo metal com equipamento de proteção"
-              loading="lazy"
-              width={1920}
-              height={1280}
-              className="h-full w-full object-cover"
-            />
+        <section id="sobre" className="section-shell bg-surface">
+          <div className="section-grid mx-auto max-w-7xl px-5 lg:px-8">
+            <div data-reveal>
+              <SectionTitle eyebrow="Sobre nós" title="Conhecimento técnico que se prova em cada execução." />
+              <div className="mt-8 space-y-5 text-base leading-8 text-muted-foreground">
+                <p>A PEH Serralheria atua há 15 anos no mercado, desenvolvendo e executando soluções em estruturas metálicas para diferentes projetos.</p>
+                <p>À frente da empresa, são 31 anos de experiência no segmento, unindo conhecimento técnico, experiência de obra e atenção a cada etapa da execução.</p>
+                <p>Mais do que fabricar estruturas, buscamos entender o projeto, planejar sua execução e entregar um trabalho com qualidade, segurança e precisão.</p>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-semibold text-foreground">
+                {["Qualidade", "Segurança", "Precisão"].map((value) => (
+                  <span key={value} className="flex items-center gap-2"><Check className="h-4 w-4 text-highlight" />{value}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative" data-reveal>
+              <div className="overflow-hidden rounded-2xl border border-metal/20">
+                <img src={sparksImg} alt="Trabalho profissional de acabamento em metal" loading="lazy" width={1920} height={1280} className="aspect-[4/5] h-full w-full object-cover" />
+              </div>
+              <div className="stats-panel">
+                <div><strong>15<span>+</span></strong><p>Anos de mercado</p></div>
+                <div className="h-px bg-metal/20 sm:h-20 sm:w-px" />
+                <div><strong>31</strong><p>Anos de experiência no segmento</p></div>
+              </div>
+            </div>
           </div>
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-navy/60">Por que a PEH</p>
-            <h2 className="mt-2 font-display text-3xl font-black text-navy sm:text-4xl">
-              Contratar serralheiro não precisa ser um risco
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              A gente sabe o que preocupa: prazo que estica, orçamento que muda no meio do
-              caminho, estrutura que não dura. Por isso trabalhamos assim:
-            </p>
-            <ul className="mt-8 space-y-6">
-              {reasons.map((r) => (
-                <li key={r.title} className="flex gap-4">
-                  <div className="mt-0.5 shrink-0 rounded-lg bg-secondary p-2.5">
-                    <r.icon className="h-5 w-5 text-navy" />
+        </section>
+
+        <section id="servicos" className="section-shell">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="max-w-3xl" data-reveal>
+              <SectionTitle eyebrow="Serviços" title="Soluções metálicas desenvolvidas para cada necessidade." />
+              <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground">Cada projeto é avaliado de acordo com suas características e necessidades, buscando uma execução técnica, segura e de qualidade.</p>
+            </div>
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {services.map((service, index) => (
+                <article key={service.title} className="service-card" data-reveal style={{ transitionDelay: `${Math.min(index, 3) * 70}ms` }}>
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img src={service.image} alt={service.title} loading="lazy" width={1024} height={768} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
-                  <div>
-                    <h3 className="font-display font-bold text-navy">{r.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{r.text}</p>
+                  <div className="flex flex-1 flex-col p-6">
+                    <service.icon className="h-6 w-6 text-highlight" />
+                    <h3 className="mt-5 text-lg font-bold text-foreground">{service.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">{service.text}</p>
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-highlight transition-colors hover:text-foreground">
+                      Solicitar orçamento <ArrowRight className="h-4 w-4" />
+                    </a>
                   </div>
-                </li>
+                </article>
               ))}
-            </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Como funciona */}
-      <section id="como-funciona" className="bg-navy-soft py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-sm font-bold uppercase tracking-widest text-navy/60">Como funciona</p>
-            <h2 className="mt-2 font-display text-3xl font-black text-navy sm:text-4xl">
-              Do primeiro contato à entrega, sem dor de cabeça
-            </h2>
+        <section id="seguranca" className="section-shell relative overflow-hidden bg-surface">
+          <div className="absolute inset-y-0 right-0 hidden w-[42%] lg:block">
+            <img src={weldingImg} alt="Execução de serviço com atenção e proteção" loading="lazy" width={1920} height={1280} className="h-full w-full object-cover opacity-30" />
+            <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-surface/20" />
           </div>
-          <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {steps.map((s) => (
-              <li key={s.title} className="rounded-2xl border border-border bg-card p-6">
-                <div className="mb-4 inline-flex rounded-lg bg-navy p-2.5">
-                  <s.icon className="h-5 w-5 text-spark" />
+          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="max-w-3xl" data-reveal>
+              <SectionTitle eyebrow="Segurança" title="Segurança faz parte de cada etapa do trabalho." />
+              <div className="mt-8 max-w-2xl space-y-5 text-base leading-8 text-muted-foreground">
+                <p>Na PEH, a execução dos serviços envolve não apenas qualidade e experiência, mas também cuidados e procedimentos voltados à segurança da equipe e da obra.</p>
+                <p>Contamos com documentação e certificações relacionadas à segurança do trabalho, além do uso adequado de EPIs e procedimentos necessários para a realização das atividades.</p>
+                <p>Nosso compromisso é executar cada projeto com responsabilidade, segurança e profissionalismo.</p>
+              </div>
+            </div>
+            <div className="mt-12 grid max-w-4xl gap-px overflow-hidden rounded-2xl border border-metal/20 bg-metal/20 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+              {safetyItems.map((item) => (
+                <article key={item.title} className="bg-surface-elevated p-6">
+                  <item.icon className="h-7 w-7 text-highlight" />
+                  <h3 className="mt-5 font-bold text-foreground">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="relative overflow-hidden py-20 sm:py-24">
+          <img src={estruturasImg} alt="Estrutura metálica executada pela PEH Serralheria" loading="lazy" width={1920} height={1280} className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-background/90" />
+          <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 lg:flex-row lg:items-end lg:px-8" data-reveal>
+            <div className="max-w-3xl">
+              <p className="eyebrow"><span />Seu projeto começa aqui</p>
+              <h2 className="mt-4 font-display text-4xl font-black uppercase leading-tight text-foreground sm:text-5xl">Uma solução metálica pensada para a sua necessidade.</h2>
+            </div>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary shrink-0 justify-center">Solicitar orçamento <ArrowRight className="h-4 w-4" /></a>
+          </div>
+        </section>
+
+        <section id="contato" className="section-shell bg-surface">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+              <div data-reveal>
+                <SectionTitle eyebrow="Contato" title="Converse com a PEH sobre o seu projeto." />
+                <p className="mt-6 text-base leading-8 text-muted-foreground">Envie as informações iniciais do seu projeto ou fale diretamente com a nossa equipe.</p>
+                <div className="mt-10 space-y-4">
+                  <a href={PHONE_URL} className="contact-link">
+                    <span><Phone className="h-5 w-5" /></span>
+                    <span><small>Telefone fixo</small><strong>{PHONE_DISPLAY}</strong></span>
+                  </a>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="contact-link">
+                    <span><MessageCircle className="h-5 w-5" /></span>
+                    <span><small>Celular e WhatsApp</small><strong>{WHATSAPP_DISPLAY}</strong></span>
+                  </a>
                 </div>
-                <h3 className="font-display font-bold text-navy">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="btn-primary justify-center">Orçamento pelo WhatsApp</a>
+                  <a href={PHONE_URL} className="btn-secondary justify-center">Ligar agora</a>
+                </div>
+              </div>
 
-      {/* FAQ */}
-      <section id="duvidas" className="mx-auto max-w-3xl px-4 py-20 sm:py-28">
-        <div className="text-center">
-          <p className="text-sm font-bold uppercase tracking-widest text-navy/60">Dúvidas frequentes</p>
-          <h2 className="mt-2 font-display text-3xl font-black text-navy sm:text-4xl">
-            Perguntas que todo mundo faz antes de fechar
-          </h2>
-        </div>
-        <div className="mt-10 space-y-3">
-          {faqs.map((f) => (
-            <details
-              key={f.q}
-              className="group rounded-xl border border-border bg-card p-5 open:border-navy/30"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display font-bold text-navy">
-                {f.q}
-                <ArrowRight className="h-4 w-4 shrink-0 rotate-90 transition-transform group-open:-rotate-90" />
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
+              <form onSubmit={submitQuote} className="quote-form" data-reveal>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <Field label="Nome" name="name" type="text" placeholder="Seu nome" required />
+                  <Field label="Telefone / WhatsApp" name="phone" type="tel" placeholder="(11) 00000-0000" required />
+                  <Field label="E-mail" name="email" type="email" placeholder="seu@email.com" />
+                  <label className="field-label">
+                    Serviço de interesse
+                    <select name="service" required className="field-control" defaultValue="">
+                      <option value="" disabled>Selecione um serviço</option>
+                      {services.map((service) => <option key={service.title} value={service.title}>{service.title}</option>)}
+                    </select>
+                  </label>
+                  <label className="field-label sm:col-span-2">
+                    Mensagem / descrição do projeto
+                    <textarea name="message" required rows={5} className="field-control resize-y" placeholder="Conte brevemente o que você precisa" />
+                  </label>
+                </div>
+                <button type="submit" className="btn-primary mt-6 w-full justify-center sm:w-auto">
+                  Solicitar orçamento <ArrowRight className="h-4 w-4" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
 
-      {/* CTA final */}
-      <section className="relative overflow-hidden">
-        <img
-          src={sparksImg}
-          alt=""
-          aria-hidden
-          loading="lazy"
-          width={1920}
-          height={1280}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-navy-deep/90" />
-        <div className="relative mx-auto max-w-3xl px-4 py-24 text-center">
-          <h2 className="font-display text-3xl font-black text-primary-foreground sm:text-4xl">
-            Seu projeto em ferro ou inox começa com uma mensagem
-          </h2>
-          <p className="mt-4 text-lg text-steel">
-            Chame agora no WhatsApp, conte o que precisa e receba orientação e orçamento
-            sem compromisso.
-          </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-spark px-8 py-4 font-display text-lg font-bold text-navy-deep transition-transform hover:scale-[1.02]"
-          >
-            <MessageCircle className="h-6 w-6" />
-            Chamar no WhatsApp
-          </a>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 bg-navy-deep py-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 text-center">
-          <img src={logoImg} alt="PEH Serralheria. Deus é fiel, tudo em ferro e aço inox" className="h-16 w-auto" />
-          <p className="text-sm text-steel">
-            PEH Serralheria. Tudo em ferro e aço inox. Estruturas, coberturas, mezaninos,
-            galpões, esquadrias, grades, corrimãos e guarda-corpos sob medida.
-          </p>
-          <p className="text-xs text-steel/60">
-            © {new Date().getFullYear()} PEH Serralheria. Todos os direitos reservados. Desenvolvido por Agência SCASE.
-          </p>
+      <footer className="border-t border-metal/15 bg-background py-14">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="grid gap-10 border-b border-metal/15 pb-12 md:grid-cols-[1.4fr_0.7fr_0.9fr]">
+            <div>
+              <img src={logoImg} alt="PEH Serralheria" className="h-16 w-auto" />
+              <p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground">Soluções metálicas desenvolvidas com experiência, segurança, qualidade e precisão.</p>
+            </div>
+            <div>
+              <h2 className="text-sm font-bold uppercase text-foreground">Navegação</h2>
+              <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
+                {navItems.slice(1).map((item) => <li key={item.href}><a href={item.href} className="hover:text-highlight">{item.label}</a></li>)}
+              </ul>
+            </div>
+            <div>
+              <h2 className="text-sm font-bold uppercase text-foreground">Contato</h2>
+              <div className="mt-5 space-y-3 text-sm text-muted-foreground">
+                <p>Telefone: <a href={PHONE_URL} className="text-foreground hover:text-highlight">{PHONE_DISPLAY}</a></p>
+                <p>WhatsApp: <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-foreground hover:text-highlight">{WHATSAPP_DISPLAY}</a></p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} PEH Serralheria. Todos os direitos reservados.</p>
+            <p>Desenvolvido por Agência SCASE.</p>
+          </div>
         </div>
       </footer>
 
-      {/* WhatsApp flutuante */}
-      <a
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Falar no WhatsApp"
-        className="fixed bottom-5 right-5 z-50 rounded-full bg-navy p-4 shadow-lg transition-transform hover:scale-110"
-      >
-        <MessageCircle className="h-6 w-6 text-spark" />
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="Solicitar orçamento pelo WhatsApp" className="whatsapp-float">
+        <MessageCircle className="h-6 w-6" />
       </a>
     </div>
+  );
+}
+
+function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
+  return (
+    <div>
+      <p className="eyebrow"><span />{eyebrow}</p>
+      <h2 className="mt-4 max-w-3xl font-display text-4xl font-black uppercase leading-[1.05] text-foreground sm:text-5xl lg:text-6xl">{title}</h2>
+    </div>
+  );
+}
+
+function Field({ label, name, type, placeholder, required = false }: { label: string; name: string; type: string; placeholder: string; required?: boolean }) {
+  return (
+    <label className="field-label">
+      {label}
+      <input name={name} type={type} placeholder={placeholder} required={required} className="field-control" />
+    </label>
   );
 }
